@@ -1,6 +1,6 @@
-### An Angular.js Interactive Dial
+## An Angular.js Interactive Dial
 
-Provides a sleek way of gathering user input when values sit in a range between 0-100.  Find a [demo](http://gordyd.github.io/dial.html) here.
+An visual component for gathering user input when values sit in a range between 0-100.  Find a [demo](http://gordyd.github.io/dial.html) here.
 
 Originally a [JSFiddle](http://jsfiddle.net/GordyD/1w8o28pa/8/) this has now been turned into a ready-to-use Angular.js directive.
 
