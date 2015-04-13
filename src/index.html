@@ -1,43 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="knobExampleApp">
+<html lang="en" ng-app="dialExampleApp">
   <head>
-    <title>Angular D3 Knob Directive</title>
+    <title>Angular D3 Dial Directive</title>
     <base href=".."></base>
-    <link rel="stylesheet" href="css/knob.css" type="text/css">
+    <link rel="stylesheet" href="css/dial.css" type="text/css">
   </head>
-  <body  ng-controller="knobCtrl">
+  <body  ng-controller="dialCtrl">
     <div class="container">
-      <h1>Knob Directive</h1>
+      <h1>Dial Directive</h1>
       <div class="plot">
-        <knob value="initialValue"></knob>
-        <knob value="initialValue", start-angle="10", end-angle="340"></knob>
-        <knob value="initialValue", start-angle="90", end-angle="180"></knob>
-        <knob value="initialValue", inner-radius="70", outerRadius="120"></knob>
+        <dial value="initialValue" animate="true"></dial>
+        <dial value="initialValue" start-angle="10" end-angle="340" animate="true"></dial>
+        <dial value="initialValue" start-angle="90" end-angle="180" animate="true"></dial>
+        <dial value="initialValue" inner-radius="70" outerRadius="120" animate="true"></dial>
         <div>Value: {{initialValue}}</div>
       </div>
     </div>
     
     <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>      
-    <script type="text/javascript" src="js/knob.d3.js"></script>        
+    <script type="text/javascript" src="js/dial.js"></script>        
     <script>
-      var app = angular.module('knobExampleApp', ['ui.knob']);
-      app.controller('knobCtrl', function($scope) {
-        console.log('ctrl');
+      var app = angular.module('dialExampleApp', ['ui.dial']);
+      app.controller('dialCtrl', function($scope) {
         $scope.initialValue = 28;
-
-        //setTimeout(increment, 400);
-
-        function increment() {
-          $scope.$apply(function() {
-            if($scope.initialValue >= 100) {
-              $scope.initialValue = 0;
-            } else {
-              $scope.initialValue++;
-            }
-          });
-          setTimeout(increment, 50);
-        }
       });
     </script>
   </body>

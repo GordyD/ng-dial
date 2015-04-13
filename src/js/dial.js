@@ -30,21 +30,26 @@
    */
   Knob.prototype.createArcs = function() {
     this.changeArc = createArc(
-      this.innerRadius, this.outerRadius, this.convertToRadians(this.startAngle, 360), this.convertToRadians(this.value, 100, this.endAngle, this.startAngle)
+      this.innerRadius, this.outerRadius, this.convertToRadians(this.startAngle, 360), this.convertToRadians(this.startAngle, 360)
     );
     this.valueArc = createArc(
-      this.innerRadius, this.outerRadius, this.convertToRadians(this.startAngle, 360), this.convertToRadians(this.value, 100, this.endAngle, this.startAngle)
+      this.innerRadius, this.outerRadius, this.convertToRadians(this.startAngle, 360), this.convertToRadians(this.startAngle, 360)
     );
     this.interactArc = createArc(
       this.innerRadius, this.outerRadius, this.convertToRadians(this.startAngle, 360), this.convertToRadians(this.endAngle, 360)
     );
 
     function createArc(innerRadius, outerRadius, startAngle, endAngle) {
-      return d3.svg.arc()
+      var arc = d3.svg.arc()
       .innerRadius(innerRadius)
       .outerRadius(outerRadius)
-      .startAngle(startAngle)
-      .endAngle(endAngle);
+      .startAngle(startAngle);
+
+      if (typeof endAngle !== "undefined") {
+        arc.endAngle(endAngle);
+      }
+
+      return arc;
     };
   };
 
@@ -92,21 +97,30 @@
    * @param  {Function} updateFn
    * @return {void}
    */
-  Knob.prototype.draw = function(updateFn) {
+  Knob.prototype.draw = function(updateFn, isAnimated) {
     var that = this;
     that.createArcs();
 
     var svg = d3.select(that.element)
     .append('svg');
 
-    drawArc(that.changeArc, 'changeArc')
-    drawArc(that.valueArc, 'valueArc')
+    var changeElem = drawArc(that.changeArc, 'changeArc')
+    var valueElem = drawArc(that.valueArc, 'valueArc')
 
     var dragBehavior = d3.behavior.drag()
     .on('drag', dragInteraction)
     .on('dragend', clickInteraction)
 
     drawArc(that.interactArc, 'interactArc', clickInteraction, dragBehavior);
+
+    if (isAnimated) {
+      animate(that.convertToRadians(that.startAngle, 360), that.convertToRadians(that.value, 100, that.endAngle, that.startAngle));
+    } else {
+      that.changeArc.endAngle(this.convertToRadians(this.value, 100, this.endAngle, this.startAngle));
+      changeElem.attr('d', that.changeArc);
+      that.valueArc.endAngle(this.convertToRadians(this.value, 100, this.endAngle, this.startAngle));
+      valueElem.attr('d', that.valueArc);
+    }
 
     svg.append('text')
     .attr('class', 'text')
@@ -128,6 +142,24 @@
       if (drag) {
         elem.call(drag);
       }
+
+      return elem;
+    }
+
+    function animate(start, end) {
+      
+      valueElem
+      .transition()
+      .ease('bounce')
+      .duration(1000)
+      .tween('',function() {
+        var i = d3.interpolate(start,end);
+        return function(t) {
+          var val = i(t);
+          valueElem.attr('d', that.valueArc.endAngle(val));
+          changeElem.attr('d', that.changeArc.endAngle(val));
+        };
+      })
     }
 
     function dragInteraction() {
@@ -186,7 +218,7 @@
 
   ui.Knob = Knob;
 
-  ui.knobDirective = function() {
+  ui.dialDirective = function() {
     return  {
       restrict: 'E',
       scope: {
@@ -205,18 +237,18 @@
           });
         }
 
-        scope.$watch('value', function(newValue) {
-          if(newValue !== null || typeof newValue !== 'undefined') {
+        scope.$watch('value', function(newValue, oldValue) {
+          if((newValue !== null || typeof newValue !== 'undefined') && typeof oldValue !== 'undefined' && newValue !== oldValue) {
             knob.setValue(newValue);
           }
         });
 
-        knob.draw(update);
+        knob.draw(update, attrs.animate === "true");
       }
     }
   }
 
   angular
-  .module('ui.knob', [])
-  .directive('knob', ui.knobDirective);
+  .module('ui.dial', [])
+  .directive('dial', ui.dialDirective);
 })();

@@ -1,3 +1,7 @@
+body {
+  font-family: Arial;
+}
+
 .plot svg {
     background: #ccc;
     width: 240px;
@@ -20,7 +24,6 @@ svg .interactArc {
 }
 
 svg .text {
-  font-family: Arial;
   font-weight: bold;
   font-size: 1.2rem;
 }
