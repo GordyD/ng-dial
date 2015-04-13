@@ -10,6 +10,8 @@
    * @param {Number} initialValue 0-100
    * @param {Number} innerRadius
    * @param {Number} outerRadius
+   * @param {Number} startAngle
+   * @param {Number} endAngle
    */
   var Knob = function(element, initialValue, innerRadius, outerRadius, startAngle, endAngle) {
     this.element = element;
@@ -92,9 +94,11 @@
   };
 
   /**
-   * Append an SVG to the element
+   * Append an SVG to the element and draw the dial component
    * 
    * @param  {Function} updateFn
+   * @param {Boolean} isAnimated
+   * 
    * @return {void}
    */
   Knob.prototype.draw = function(updateFn, isAnimated) {
