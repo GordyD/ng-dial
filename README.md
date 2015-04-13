@@ -8,6 +8,7 @@ Originally a [JSFiddle](http://jsfiddle.net/GordyD/1w8o28pa/8/) this has now bee
 
  - interactive
  - animated
+ - shows previous value
  - 2-way data binding (will respond to changes to model and update model accordingly)
 
 #### Parameters
@@ -33,11 +34,13 @@ In order to use in your project you will need to:
 
 Clone the repository
 
+```bash
 git clone https://github.com/GordyD/ng-dial.git
 cd ng-dial
 npm install
 bower install
 node app.js
+```
 
 Go to http://localhost:3000 to see example radial plots.
 
