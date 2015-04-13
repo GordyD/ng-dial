@@ -57,8 +57,8 @@
    * Convert a value between 0 and 100 to radians
    * 
    * @param  {Number} value
-   * @param  {NUmber} d
-   * @param  {NUmber} e
+   * @param  {Number} d
+   * @param  {Number} e
    * @param  {Number} s
    * 
    * @return {Number}
@@ -76,8 +76,8 @@
    * Convert from radians
    * 
    * @param  {Number} radians
-   * @param  {NUmber} d
-   * @param  {NUmber} e
+   * @param  {Number} d
+   * @param  {Number} e
    * @param  {Number} s
    * 
    * @return {Number}
@@ -250,5 +250,5 @@
 
   angular
   .module('ui.dial', [])
-  .directive('dial', ui.dialDirective);
+  .directive('ngDial', ui.dialDirective);
 })();
