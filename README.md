@@ -26,8 +26,8 @@ In order to use in your project you will need to:
 
  1. include `dial.js` as one of your source files e.g `<script src="js/dial.js">`
  2. include `dial.css` for styling e.g. `<link rel="stylesheet" href="css/dial.css" type="text/css">`
- 3. include `ui.dial` as a dependency of your Angular app e.g. `var app = angular.module('dialExampleApp', ['ui.dialplot']);`
- 4. include a dial inside a template `<ng-dial value="initialValue"></ng-dial>`
+ 3. include `ui.dial` as a dependency of your Angular app e.g. `var app = angular.module('dialExampleApp', ['gmd.dialplot']);`
+ 4. include a dial inside a template `<gmd-dial value="initialValue"></gmd-dial>`
 
 
 #### Setup Example
