@@ -56,7 +56,7 @@
   };
 
   /**
-   * Convert a value between 0 and 100 to radians
+   * Convert a value in [0,100] to radians
    * 
    * @param  {Number} value
    * @param  {Number} d
@@ -71,11 +71,11 @@
     e = e || 360;
     s = s || 0;
     r = e - s;
-    return (s + ((r/d) * value)) * (Math.PI/180)
+    return (s + ((r/d) * value)) * (Math.PI/180);
   };
 
   /**
-   * Convert from radians
+   * Convert from radians to a value in range [0,100]
    * 
    * @param  {Number} radians
    * @param  {Number} d
@@ -90,7 +90,7 @@
     e = e || 360;
     s = s || 0;
     r = e - s;
-    return Math.round(((180/Math.PI) * radians) * (d/r));
+    return Math.round(((180/Math.PI) * Math.abs(radians)) * (d/r));
   };
 
   /**
@@ -113,7 +113,7 @@
 
     var dragBehavior = d3.behavior.drag()
     .on('drag', dragInteraction)
-    .on('dragend', clickInteraction)
+    .on('dragend', clickInteraction);
 
     drawArc(that.interactArc, 'interactArc', clickInteraction, dragBehavior);
 
@@ -163,7 +163,7 @@
           valueElem.attr('d', that.valueArc.endAngle(val));
           changeElem.attr('d', that.changeArc.endAngle(val));
         };
-      })
+      });
     }
 
     function dragInteraction() {
@@ -184,12 +184,12 @@
     function interaction(x,y, isFinal) {
       var arc = Math.atan(y/x)/(Math.PI/180), radians, delta;
       if ((x >= 0 && y <= 0) || (x >= 0 && y >= 0)) {
-        delta = 90
+        delta = 90;
       } else {
         delta = 270;
       }
       radians = ((delta-that.startAngle) + arc) * (Math.PI/180);
-      that.value = that.convertFromRadians(radians, 100, that.endAngle - that.startAngle);
+      that.value = that.convertFromRadians(radians, 100, that.endAngle, that.startAngle);
       if(that.value >= 0 && that.value <= 100) {
         updateFn(that.value);
         that.valueArc.endAngle(that.convertToRadians(that.value, 100, that.endAngle, that.startAngle));
@@ -218,7 +218,7 @@
       d3.select(this.element).select('#valueArc').attr('d', this.valueArc);
       d3.select(this.element).select('#text').text(newValue);
     }
-  }
+  };
 
   gmd.Knob = Knob;
 
@@ -249,8 +249,8 @@
 
         knob.draw(update, attrs.animate === "true");
       }
-    }
-  }
+    };
+  };
 
   angular
   .module('gmd.dial', [])
