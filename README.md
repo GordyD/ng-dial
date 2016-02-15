@@ -19,6 +19,7 @@ Originally a [JSFiddle](http://jsfiddle.net/GordyD/1w8o28pa/8/) this has now bee
  - `endAngle` - `0-360`. Default: `360`
  - `innerRadius` - An integer. Default: `60`
  - `outerRadius` - An integer. Default: `100`
+ - `clickable`- either `true` or `false`. Default: `true`
 
 #### Usage
 
