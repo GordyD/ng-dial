@@ -13,7 +13,7 @@
    * @param {Number} startAngle
    * @param {Number} endAngle
    */
-  var Knob = function(element, initialValue, innerRadius, outerRadius, startAngle, endAngle) {
+  var Knob = function(element, initialValue, innerRadius, outerRadius, startAngle, endAngle, clickable) {
     this.element = element;
     this.value = initialValue;
     this.radians = this.convertToRadians(initialValue);
@@ -23,6 +23,7 @@
     this.endAngle = endAngle,  
     this.offset = this.outerRadius + 20;
     this.inDrag = false;
+    this.clickable = clickable;
   };
 
   /**
@@ -110,7 +111,7 @@
 
     var changeElem = drawArc(that.changeArc, 'changeArc')
     var valueElem = drawArc(that.valueArc, 'valueArc')
-
+    
     var dragBehavior = d3.behavior.drag()
     .on('drag', dragInteraction)
     .on('dragend', clickInteraction);
@@ -167,18 +168,22 @@
     }
 
     function dragInteraction() {
-      that.inDrag = true;
-      var x = d3.event.x - that.offset;
-      var y = d3.event.y - that.offset;
-      interaction(x,y, false);
+      if(that.clickable){
+        that.inDrag = true;
+        var x = d3.event.x - that.offset;
+        var y = d3.event.y - that.offset;
+        interaction(x,y, false);
+      }
     }
 
     function clickInteraction() {
-      that.inDrag = false;
-      var coords = d3.mouse(this.parentNode);
-      var x = coords[0] - that.offset;
-      var y = coords[1] - that.offset;
-      interaction(x,y, true);
+      if(that.clickable){
+        that.inDrag = false;
+        var coords = d3.mouse(this.parentNode);
+        var x = coords[0] - that.offset;
+        var y = coords[1] - that.offset;
+        interaction(x,y, true); 
+      }
     }
 
     function interaction(x,y, isFinal) {
@@ -233,7 +238,8 @@
             outerRadius = parseInt(attrs.outerRadius, 10) || 100,
             startAngle = parseInt(attrs.startAngle, 10) || 0,
             endAngle = parseInt(attrs.endAngle, 10) || 360,
-            knob = new gmd.Knob(element[0], scope.value, innerRadius, outerRadius, startAngle, endAngle);
+            clickable = (attrs.clickable === 'false') ? false : true,
+            knob = new gmd.Knob(element[0], scope.value, innerRadius, outerRadius, startAngle, endAngle, clickable);
 
         function update(value) {
           scope.$apply(function() {

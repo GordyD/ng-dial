@@ -12,13 +12,20 @@
     <div class="container">
       <h1>Dial Directive</h1>
 
-      
       <div class="plot" ng-cloak>
         <h2>2-way data binding</h2>
         <div class="center">Value: {{initialValue}}</div>
-        <gmd-dial value="initialValue" animate="true"></gmd-dial><gmd-dial value="initialValue" start-angle="10" end-angle="340" animate="true"></gmd-dial><gmd-dial value="initialValue" start-angle="90" end-angle="180" animate="true"></gmd-dial><gmd-dial value="initialValue" inner-radius="70" outerRadius="120" animate="true"></gmd-dial>
+        <div class="dialValueInput"><label for="dialInput">Dial Value: </label><input id="dialInput" ng-model="initialValue"></div>
+        <gmd-dial value="initialValue" animate="true"></gmd-dial>
+        <gmd-dial value="initialValue" start-angle="10" end-angle="340" animate="true"></gmd-dial>
+        <gmd-dial value="initialValue" start-angle="90" end-angle="180" animate="true"></gmd-dial>
+        <gmd-dial value="initialValue" inner-radius="70" outerRadius="120" animate="true"></gmd-dial>
       </div>
 
+      <div class="plot" ng-cloak>
+        <h2>Un-clickable Dial</h2>
+        <gmd-dial value="70" start-angle="10" end-angle="340" animate="true" clickable="false"></gmd-dial>
+      </div>
       
       <div class="plot" ng-cloak>
         <h2>Firebase powered (will be updated by other users changes)</h2>
