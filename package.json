@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start testing.conf.js --single-run --browsers PhantomJS"
+    "test": "karma start testing.conf.js --single-run --browsers PhantomJS"
   },
   "devDependencies": {
     "angular": "^1.6.9",
