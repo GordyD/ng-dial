@@ -1,3 +1,6 @@
+/*eslint-env browser */
+/*global angular, d3 */
+
 (function() {
   'use strict';
   var gmd = {};
@@ -52,7 +55,7 @@
       }
 
       return arc;
-    };
+    }
   };
 
   /**
