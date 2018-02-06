@@ -6,6 +6,8 @@
     "test": "./node_modules/karma/bin/karma start testing.conf.js --single-run --browsers PhantomJS"
   },
   "devDependencies": {
+    "angular": "^1.6.9",
+    "d3": "~3.5.12",
     "express": "~3.2.6",
     "karma": "~0.12.16",
     "karma-chrome-launcher": "~0.1.4",

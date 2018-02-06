@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1">
     <title>Angular D3 Dial Directive</title>
-    <base href=".."></base>
-    <link rel="stylesheet" href="css/dial.css" type="text/css">
+    <link rel="stylesheet" href="/css/dial.css" type="text/css">
   </head>
   <body ng-controller="dialCtrl">
     <div class="container">
@@ -26,20 +25,20 @@
         <h2>Un-clickable Dial</h2>
         <gmd-dial value="70" start-angle="10" end-angle="340" animate="true" clickable="false"></gmd-dial>
       </div>
-      
+
       <div class="plot" ng-cloak>
         <h2>Firebase powered (will be updated by other users changes)</h2>
         <gmd-dial ng-repeat="dial in liveDials" value="dial.value"></gmd-dial>
       </div>
     </div>
-    
-    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+
+    <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
     <!-- Firebase -->
     <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
-    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>      
-    <script type="text/javascript" src="js/dial.js"></script>        
+    <script type="text/javascript" src="/node_modules/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/js/dial.js"></script>
     <script>
       var app = angular.module('dialExampleApp', ['gmd.dial', 'firebase']);
       app.controller('dialCtrl', function($scope, $firebaseArray) {
