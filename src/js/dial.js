@@ -158,8 +158,8 @@
         .transition()
         .ease('bounce')
         .duration(1000)
-        .tween('',function() {
-          var i = d3.interpolate(start,end);
+        .tween('', function() {
+          var i = d3.interpolate(start, end);
           return function(t) {
             var val = i(t);
             valueElem.attr('d', that.valueArc.endAngle(val));
@@ -173,7 +173,7 @@
         that.inDrag = true;
         var x = d3.event.x - that.offset;
         var y = d3.event.y - that.offset;
-        interaction(x,y, false);
+        interaction(x, y, false);
       }
     }
 
@@ -183,11 +183,11 @@
         var coords = d3.mouse(this.parentNode);
         var x = coords[0] - that.offset;
         var y = coords[1] - that.offset;
-        interaction(x,y, true);
+        interaction(x, y, true);
       }
     }
 
-    function interaction(x,y, isFinal) {
+    function interaction(x, y, isFinal) {
       var arc = Math.atan(y/x)/(Math.PI/180), radians, delta;
       if ((x >= 0 && y <= 0) || (x >= 0 && y >= 0)) {
         delta = 90;
