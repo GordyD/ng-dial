@@ -108,8 +108,8 @@
     var svg = d3.select(that.element)
     .append('svg');
 
-    var changeElem = drawArc(that.changeArc, 'changeArc')
-    var valueElem = drawArc(that.valueArc, 'valueArc')
+    var changeElem = drawArc(that.changeArc, 'changeArc');
+    var valueElem = drawArc(that.valueArc, 'valueArc');
     
     var dragBehavior = d3.behavior.drag()
     .on('drag', dragInteraction)
@@ -151,7 +151,6 @@
     }
 
     function animate(start, end) {
-      
       valueElem
       .transition()
       .ease('bounce')
