@@ -46,9 +46,9 @@
 
     function createArc(innerRadius, outerRadius, startAngle, endAngle) {
       var arc = d3.svg.arc()
-      .innerRadius(innerRadius)
-      .outerRadius(outerRadius)
-      .startAngle(startAngle);
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius)
+        .startAngle(startAngle);
 
       if (typeof endAngle !== 'undefined') {
         arc.endAngle(endAngle);
@@ -109,14 +109,14 @@
     that.createArcs();
 
     var svg = d3.select(that.element)
-    .append('svg');
+      .append('svg');
 
     var changeElem = drawArc(that.changeArc, 'changeArc');
     var valueElem = drawArc(that.valueArc, 'valueArc');
 
     var dragBehavior = d3.behavior.drag()
-    .on('drag', dragInteraction)
-    .on('dragend', clickInteraction);
+      .on('drag', dragInteraction)
+      .on('dragend', clickInteraction);
 
     drawArc(that.interactArc, 'interactArc', clickInteraction, dragBehavior);
 
@@ -130,17 +130,17 @@
     }
 
     svg.append('text')
-    .attr('class', 'text')
-    .attr('id', 'text')
-    .text(that.value)
-    .attr('transform', 'translate(' + (that.offset-12) + ', ' + (that.offset+2) + ')');
+      .attr('class', 'text')
+      .attr('id', 'text')
+      .text(that.value)
+      .attr('transform', 'translate(' + (that.offset-12) + ', ' + (that.offset+2) + ')');
 
     function drawArc(arc, label, click, drag) {
       var elem = svg.append('path')
-      .attr('class', label)
-      .attr('id', label)
-      .attr('d', arc)
-      .attr('transform', 'translate(' + (that.offset) + ', ' + (that.offset) + ')');
+        .attr('class', label)
+        .attr('id', label)
+        .attr('d', arc)
+        .attr('transform', 'translate(' + (that.offset) + ', ' + (that.offset) + ')');
 
       if (click) {
         elem.on('click', click);
@@ -155,17 +155,17 @@
 
     function animate(start, end) {
       valueElem
-      .transition()
-      .ease('bounce')
-      .duration(1000)
-      .tween('',function() {
-        var i = d3.interpolate(start,end);
-        return function(t) {
-          var val = i(t);
-          valueElem.attr('d', that.valueArc.endAngle(val));
-          changeElem.attr('d', that.changeArc.endAngle(val));
-        };
-      });
+        .transition()
+        .ease('bounce')
+        .duration(1000)
+        .tween('',function() {
+          var i = d3.interpolate(start,end);
+          return function(t) {
+            var val = i(t);
+            valueElem.attr('d', that.valueArc.endAngle(val));
+            changeElem.attr('d', that.changeArc.endAngle(val));
+          };
+        });
     }
 
     function dragInteraction() {
@@ -236,11 +236,11 @@
       },
       link: function (scope, element, attrs) {
         var innerRadius = parseInt(attrs.innerRadius, 10) || 60,
-            outerRadius = parseInt(attrs.outerRadius, 10) || 100,
-            startAngle = parseInt(attrs.startAngle, 10) || 0,
-            endAngle = parseInt(attrs.endAngle, 10) || 360,
-            clickable = (attrs.clickable === 'false') ? false : true,
-            knob = new gmd.Knob(element[0], scope.value, innerRadius, outerRadius, startAngle, endAngle, clickable);
+          outerRadius = parseInt(attrs.outerRadius, 10) || 100,
+          startAngle = parseInt(attrs.startAngle, 10) || 0,
+          endAngle = parseInt(attrs.endAngle, 10) || 360,
+          clickable = (attrs.clickable === 'false') ? false : true,
+          knob = new gmd.Knob(element[0], scope.value, innerRadius, outerRadius, startAngle, endAngle, clickable);
 
         function update(value) {
           scope.$apply(function() {
@@ -260,6 +260,6 @@
   };
 
   angular
-  .module('gmd.dial', [])
-  .directive('gmdDial', gmd.dialDirective);
+    .module('gmd.dial', [])
+    .directive('gmdDial', gmd.dialDirective);
 })();
