@@ -50,7 +50,7 @@
       .outerRadius(outerRadius)
       .startAngle(startAngle);
 
-      if (typeof endAngle !== "undefined") {
+      if (typeof endAngle !== 'undefined') {
         arc.endAngle(endAngle);
       }
 
@@ -254,7 +254,7 @@
           }
         });
 
-        knob.draw(update, attrs.animate === "true");
+        knob.draw(update, attrs.animate === 'true');
       }
     };
   };
