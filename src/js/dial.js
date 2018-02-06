@@ -22,7 +22,7 @@
     this.innerRadius = innerRadius;
     this.outerRadius = outerRadius;
     this.startAngle = startAngle,
-    this.endAngle = endAngle,  
+    this.endAngle = endAngle,
     this.offset = this.outerRadius + 20;
     this.inDrag = false;
     this.clickable = clickable;
@@ -30,7 +30,7 @@
 
   /**
    * Create the arcs required for this interactive component.
-   * 
+   *
    * @return {void}
    */
   Knob.prototype.createArcs = function() {
@@ -60,12 +60,12 @@
 
   /**
    * Convert a value in [0,100] to radians
-   * 
+   *
    * @param  {Number} value
    * @param  {Number} d
    * @param  {Number} e
    * @param  {Number} s
-   * 
+   *
    * @return {Number}
    */
   Knob.prototype.convertToRadians = function(value, d, e, s) {
@@ -79,12 +79,12 @@
 
   /**
    * Convert from radians to a value in range [0,100]
-   * 
+   *
    * @param  {Number} radians
    * @param  {Number} d
    * @param  {Number} e
    * @param  {Number} s
-   * 
+   *
    * @return {Number}
    */
   Knob.prototype.convertFromRadians = function(radians, d, e, s) {
@@ -98,10 +98,10 @@
 
   /**
    * Append an SVG to the element and draw the dial component
-   * 
+   *
    * @param  {Function} updateFn
    * @param {Boolean} isAnimated
-   * 
+   *
    * @return {void}
    */
   Knob.prototype.draw = function(updateFn, isAnimated) {
@@ -113,7 +113,7 @@
 
     var changeElem = drawArc(that.changeArc, 'changeArc');
     var valueElem = drawArc(that.valueArc, 'valueArc');
-    
+
     var dragBehavior = d3.behavior.drag()
     .on('drag', dragInteraction)
     .on('dragend', clickInteraction);
@@ -183,7 +183,7 @@
         var coords = d3.mouse(this.parentNode);
         var x = coords[0] - that.offset;
         var y = coords[1] - that.offset;
-        interaction(x,y, true); 
+        interaction(x,y, true);
       }
     }
 
@@ -211,7 +211,7 @@
 
   /**
    * Set the value of the gauge to something new.
-   * 
+   *
    * @param {Number} newValue
    */
   Knob.prototype.setValue = function(newValue) {

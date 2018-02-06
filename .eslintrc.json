@@ -1,3 +1,8 @@
 {
-    "extends": "eslint:recommended"
+    "extends": "eslint:recommended",
+    "rules": {
+        "no-trailing-spaces": "error",
+        "semi": "error",
+        "unicode-bom": "error"
+    }
 }
