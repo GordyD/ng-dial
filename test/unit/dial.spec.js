@@ -20,7 +20,7 @@ describe('gmd.dial', function() {
 
       var svg = element.find('svg');
       expect(svg.length).toBe(1);
-      expect(svg.find('path').length).toBe(3);
+      expect(svg.find('path').length).toBe(4);
       var text = svg.find('text');
       expect(text.length).toBe(1);
       expect(text.text()).toBe('5');
