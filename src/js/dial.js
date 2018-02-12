@@ -31,9 +31,9 @@
     this.maxValue = 100;
     this.prefix = null;
     this.suffix = null;
-    this.noOfSegments = 0;
-    this.noOfDecimals = 0;
-    this.allowTosnap = false;
+    this.segmentCount = 0;
+    this.decimalCount = 0;
+    this.allowToSnap = false;
   };
 
   /**
@@ -190,7 +190,7 @@
         delta = 270;
       }
       radians = ((delta-that.startAngle) + arc) * (Math.PI/180);
-      if(that.allowToSnap && that.noOfSegments > 0) {
+      if(that.allowToSnap && that.segmentCount > 0) {
         var angle = radians * (180 / Math.PI);
         angle = that.getClosestAngle(angle);
         radians = angle * (Math.PI / 180);
@@ -270,82 +270,16 @@
   };
 
   /**
-   * Set the minimum value
-   *
-   * @param {Number} value
-   *
-   * @return {void}
-   */
-  Knob.prototype.setMinValue = function(value) {
-    this.minValue = value;
-  };
-
-  /**
-   * Set the maximum value
-   *
-   * @param {Number} value
-   *
-   * @return {void}
-   */
-  Knob.prototype.setMaxValue = function(value) {
-    this.maxValue = value;
-  };
-
-  /**
-   * Set the prefix
-   *
-   * @param {String} prefix
-   *
-   * @return {void}
-   */
-  Knob.prototype.setPrefix = function(prefix) {
-    this.prefix = prefix;
-  };
-
-  /**
-   * Set the suffix
-   *
-   * @param {String} suffix
-   *
-   * @return {void}
-   */
-  Knob.prototype.setSuffix = function(suffix) {
-    this.suffix = suffix;
-  };
-
-  /**
-   * Allow to snap
-   *
-   * @param {Boolean} snap
-   *
-   * @return {void}
-   */
-  Knob.prototype.isAllowToSnap = function(snap) {
-    this.allowToSnap = snap;
-  };
-
-  /**
    * Allow to show the dial center text
    *
    * @param {Boolean} flag
    *
    * @return {void}
    */
-  Knob.prototype.isShowCenterText = function(flag) {
+  Knob.prototype.isAllowedToShowDialValue = function(flag) {
     if(flag === false) {
       d3.select(this.element).select('#text').style('display', 'none');
     }
-  };
-
-  /**
-   * Set number of segments
-   *
-   * @param {Number} noOfSegments
-   *
-   * @return {void}
-   */
-  Knob.prototype.setNoOfSegments = function(noOfSegments) {
-    this.noOfSegments = noOfSegments;
   };
 
   /**
@@ -373,7 +307,7 @@
    * @return {Number}
    */
   Knob.prototype.convertToMinMaxValue = function(value) {
-    return parseFloat(value * ((this.maxValue - this.minValue) / 100) + parseFloat(this.minValue)).toFixed(this.noOfDecimals);
+    return parseFloat(value * ((this.maxValue - this.minValue) / 100) + parseFloat(this.minValue)).toFixed(this.decimalCount);
   };
 
   /**
@@ -384,7 +318,7 @@
    * @return {Number}
    */
   Knob.prototype.convertFromMinMaxValue = function (value) {
-    return parseFloat((value - this.minValue) / (this.maxValue - this.minValue) * 100).toFixed(this.noOfDecimals);
+    return parseFloat((value - this.minValue) / (this.maxValue - this.minValue) * 100).toFixed(this.decimalCount);
   };
 
   /**
@@ -396,7 +330,7 @@
    */
   Knob.prototype.getClosestAngle = function(angle) {
     var closest, smallestDiff, currentDiff;
-    var segments = d3.range(0, 360, 360 / this.noOfSegments);
+    var segments = d3.range(0, 360, 360 / this.segmentCount);
     if(segments.indexOf(angle) > -1) {
       return angle;
     }
@@ -428,8 +362,8 @@
    *
    * @return {void}
    */
-  Knob.prototype.setNoOfDecimals = function (minValue, maxValue, correctValue) {
-    this.noOfDecimals = Math.max(checkForDecimal(minValue), checkForDecimal(maxValue), checkForDecimal(correctValue));
+  Knob.prototype.findAndSetDecimalCount = function (minValue, maxValue, correctValue) {
+    this.decimalCount = Math.max(checkForDecimal(minValue), checkForDecimal(maxValue), checkForDecimal(correctValue));
 
     function checkForDecimal(value) {
       if (value - Math.floor(value) !== 0) {
@@ -443,12 +377,12 @@
   /**
    * Set the segment lines and its labels.
    *
-   * @param {Number} noOflabels
+   * @param {Number} labelCount
    */
-  Knob.prototype.setSegments = function (noOflabels) {
+  Knob.prototype.setSegments = function (labelCount) {
     var that = this;
-    var magicValue = 5;
-    var numberOfSegments = this.noOfSegments;
+    var extraSpace = 5; // Which will give some space between increment and its label
+    var numberOfSegments = this.segmentCount;
     var outerRadius = that.outerRadius;
     var radians = (Math.PI * 2) / numberOfSegments;
     var degrees = 360 / numberOfSegments;
@@ -457,8 +391,8 @@
 
     var svg = d3.select(this.element).select('svg');
     var arc = d3.svg.arc()
-      .innerRadius(outerRadius + (2 * magicValue))
-      .outerRadius(outerRadius + (2 * magicValue))
+      .innerRadius(outerRadius + (2 * extraSpace))
+      .outerRadius(outerRadius + (2 * extraSpace))
       .startAngle(function (d) {
         return radians * d;
       }).endAngle(function (d) {
@@ -478,48 +412,48 @@
 
     ga.append('line')
       .attr('x2', outerRadius)
-      .attr('x1', outerRadius + (2 * magicValue))
+      .attr('x1', outerRadius + (2 * extraSpace))
       .attr('transform', function (d) {
-        return 'rotate(' + (d * degrees - 90) + ' ' + (outerRadius + (2 * magicValue)) + ' 0)';
+        return 'rotate(' + (d * degrees - 90) + ' ' + (outerRadius + (2 * extraSpace)) + ' 0)';
       });
 
-    if(parseInt(noOflabels) > 0) {
+    if(parseInt(labelCount) > 0) {
       // Collecting increments label
-      var mod = Math.floor(numberOfSegments / noOflabels);
+      var mod = Math.floor(numberOfSegments / labelCount);
       for (var y=0; y <= numberOfSegments; y += mod) {
         labelItems.push(y);
-        if(labelItems.length >= noOflabels) {
+        if(labelItems.length >= labelCount) {
           break;
         }
       }
 
       // Set increments label text
       ga.append('text')
-        .attr('x', outerRadius + (3 * magicValue))
+        .attr('x', outerRadius + (3 * extraSpace))
         .attr('dy', '.35em').attr('transform', function(d) {
           var angle, tx, ty;
           angle = d * degrees;
           if (angle === 0) {
-            tx = ty = -(2 * magicValue);
+            tx = ty = -(2 * extraSpace);
           } else if (angle === 90) {
             tx = ty = 0;
           } else if (angle === 180) {
-            tx = -(3 * magicValue);
-            ty = 2 * magicValue;
+            tx = -(3 * extraSpace);
+            ty = 2 * extraSpace;
           } else if (angle === 270) {
-            tx = -(6 * magicValue);
+            tx = -(6 * extraSpace);
             ty = 0;
           } else if ((angle < 90 && angle > 0)) {
-            tx = ty = -1 * magicValue;
+            tx = ty = -1 * extraSpace;
           } else if ((angle < 180 && angle > 90)) {
-            tx = -1 * magicValue;
-            ty = magicValue;
+            tx = -1 * extraSpace;
+            ty = extraSpace;
           } else if ((angle < 270 && angle > 180)) {
-            tx = -(5 * magicValue);
-            ty = magicValue;
+            tx = -(5 * extraSpace);
+            ty = extraSpace;
           } else if ((angle < 360 && angle > 270)) {
-            tx = -(5 * magicValue);
-            ty = -1 * magicValue;
+            tx = -(5 * extraSpace);
+            ty = -1 * extraSpace;
           }
           return 'translate(' + tx + ',' + ty + ')';
         }).style('text-anchor', function(d) {
@@ -529,7 +463,7 @@
           if (labelItems.indexOf(d) === -1) {
             return '';
           }
-          return that.getDisplayValue(segments[d].toFixed(that.noOfDecimals));
+          return that.getDisplayValue(segments[d].toFixed(that.decimalCount));
         });
     }
   };
@@ -569,7 +503,6 @@
 
         function update(value) {
           scope.$apply(function() {
-            scope.value = value;
             scope.$parent.value = value;
           });
         }
