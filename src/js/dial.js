@@ -366,7 +366,7 @@
     this.decimalCount = Math.max(checkForDecimal(minValue), checkForDecimal(maxValue), checkForDecimal(correctValue));
 
     function checkForDecimal(value) {
-      if (value - Math.floor(value) !== 0) {
+      if(value !== Math.floor(value)) {
         var str = value.toString();
         return str.length - 1 - str.indexOf('.');
       }
